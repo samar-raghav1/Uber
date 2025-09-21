@@ -1,22 +1,37 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-
+/* eslint-disable no-unused-vars */
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserDataContext } from '../context/userContext.jsx'
 const UserSignUp = () => {
     const [firstname,setFirstname]=useState('')
     const [lastname,setLastname]=useState('')
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
-    const [userData,setUserData]=useState({})
+    const {user,setUser} = useContext(UserDataContext)
 
-    const submitHandler=(e)=>{
+    const navigate=useNavigate()
+
+    const submitHandler=async(e)=>{
         e.preventDefault();
-        console.log(email,password);
-        setUserData({email:email,password:password,
-            fullName:{
+        
+        const newUser={email:email,password:password,
+            fullname:{
                 firstname:firstname,lastname:lastname
             }
-        })
-        console.log(userData);
+        }
+        
+        const res=await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`,newUser);
+
+        if (res.status===201){
+            const data=res.data;
+            setUser(data.user)
+            localStorage.setItem("token",data.token)
+            navigate('/home')
+            console.log(data);
+            
+
+        }
         setFirstname('')
         setLastname('')
         setEmail('')
@@ -55,7 +70,7 @@ const UserSignUp = () => {
             setPassword(e.target.value)
          }} required type="password" placeholder='Enter password' />
 
-        <button className='bg-[#111] text-white font-semibold mb-4 rounded px-4 py-2 border w-full text-lg placeholder:text-base'>Login</button>
+        <button className='bg-[#111] text-white font-semibold mb-4 rounded px-4 py-2 border w-full text-lg placeholder:text-base'>Create Account</button>
        <p className='text-center'>Already have an Account? <Link to={'/login'} className="text-blue-600">Login</Link></p>
       </form>
     </div>

@@ -1,17 +1,28 @@
+/* eslint-disable no-unused-vars */
+import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const CaptainLogin = () => {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
         const [captainData,setCaptainData]=useState({})
+    const navigate=useNavigate();
     
-        const submitHandler=(e)=>{
+        const submitHandler=async(e)=>{
             e.preventDefault();
-            console.log(email,password);
-            setCaptainData({email:email,password:password})
-            console.log(captainData);
             
+            const captain={
+                email:email,
+                password:password
+            }
+            const res= await axios.post(`${import.meta.env.VITE_BASE_URL}/captain/login`,captain)
+            if(res.status===200){
+                const data=res.data;
+                setCaptainData(data.captain)
+                localStorage.setItem("token",data.token)
+                navigate('/captain-home')
+            }
             setEmail('')
             setPassword('')
         }
