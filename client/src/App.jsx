@@ -17,7 +17,7 @@ import CaptainRide from './Pages/CaptainRide'
 
 const App = () => {
   return (
-    <div className=''>
+    <div className='mx-auto min-h-screen w-full max-w-[430px] overflow-x-hidden bg-white shadow-xl [transform:translateZ(0)]'>
       <Routes>
         <Route path='/' element={<Start/>}/>
         <Route path='/login' element={<UserLogin/>}/>

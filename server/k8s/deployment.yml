@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uber-deployment
+  namespace: uber
+spec:
+  selector:
+    matchLabels:
+      app: uber-server
+  template:
+    metadata:
+      labels:
+        app: uber-server
+    spec:
+      containers:
+      - name: uber-server
+        image: samarraghav1/uber-server:latest
+        volumeMounts:
+          - name: env-connection
+            mountPath: /env
+        ports:
+        - containerPort: 8000
+      volumes:
+        - name: env-connection
+          secret:
+            secretName: uber-secret

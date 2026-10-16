@@ -104,7 +104,7 @@ const Home = () => {
   return (
     <div className='h-screen relative overflow-hidden'>
      <img className='w-16 absolute left-5 top-5  ' src="https://pluspng.com/img-png/uber-logo-vector-png-uber-icon-png-50-px-1600.png" alt="" />
-     <div className='h-screen w-screen'>
+    <div className='h-screen w-full'>
       <img src="https://www.infomoney.com.br/wp-content/uploads/2019/06/uber.png?fit=900%2C1600&quality=50&strip=all" alt="" />
      </div>
      <div className='absolute flex flex-col justify-end  w-full  top-0 h-screen'>
@@ -117,18 +117,18 @@ const Home = () => {
         submitHandler(e)
       }} >
         <div  className="line absolute h-16 w-1 top-[45%] left-10 bg-gray-900 rounded-full "></div>
-        <input value={pickUp} onClick={()=>{
+        <input id="pickup" value={pickUp} onClick={()=>{
           setPanelOpen(true)
         }}
         onChange={(e)=>{
           setPickUp(e.target.value)
-        }} className='bg-[#eeeeee] px-12 py-2 text-base rounded-lg w-full mt-4' type="text" placeholder='Add a pick-up location' />
-        <input onClick={()=>{
+        }} className='bg-[#eeeeee] px-12 py-2 text-base rounded-lg w-full mt-4' type="text" name="pickup" placeholder='Add a pick-up location' />
+        <input id="destination" onClick={()=>{
           setPanelOpen(true)
         }}
           value={destination} onChange={(e)=>{
           setDestination(e.target.value) }}
-          className='bg-[#eeeeee] px-12 py-2 text-base rounded-lg w-full mt-3'  type="text" placeholder='Enter your destination'  />
+          className='bg-[#eeeeee] px-12 py-2 text-base rounded-lg w-full mt-3'  type="text" name='destination' placeholder='Enter your destination'  />
       </form>
      </div>
      <div ref={panelRef} className=' h-0 bg-white '>
