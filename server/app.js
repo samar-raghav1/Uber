@@ -9,15 +9,12 @@ const mapsRoute=require("./routes/mapRoute")
 
 const app=express();
 dotenv.config()
-const frontendOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
-    .split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean);
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors({
-    origin: frontendOrigins,
-    credentials: true
+  origin: process.env.FRONTEND_URL, // replace with your actual Vercel domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 app.use(cookieParser())
 app.use("/user",userRoute);
